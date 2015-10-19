@@ -2,7 +2,7 @@
 
 Send in stdout from imagemagicks identify -verbose
 
-```
+```js
   var exec = require('child_process').exec
   var filepath = "/path/to/file"
   var identifyParser = require("identify-verbose-parser")
