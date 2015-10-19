@@ -1,0 +1,11 @@
+{
+  "name": "identify-verbose-parser",
+  "version": "1.0.0",
+  "description": "Parses a verbose outpout from imagmagicks identify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Simon Nord <simon@nord.org>",
+  "license": "MIT"
+}
