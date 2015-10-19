@@ -1,4 +1,4 @@
-var camelCase = require('lodash.camelcase');
+  var camelCase = require('lodash.camelcase');
 
 var orientations = {
     '1': 'TopLeft'
@@ -53,6 +53,8 @@ helper.orientation = function Orientation (o, val) {
 };
 
 helper.valParser = function(val) {
+  if(/^\d+\.?\d*$/.test(val)) return parseFloat(val)
+  
   switch(val) {
     case 'true':
     case 'True':
