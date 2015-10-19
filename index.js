@@ -1,3 +1,5 @@
+var camelCase = require('lodash.camelcase');
+
 var orientations = {
     '1': 'TopLeft'
   , '2': 'TopRight'
@@ -11,7 +13,7 @@ var orientations = {
 
 var helper = {}
 
-helper.Geometry = function Geometry (o, val) {
+helper.geometry = function Geometry (o, val) {
   // We only want the size of the first frame.
   // Each frame is separated by a space.
   var split = val.split(" ").shift().split("x");
@@ -28,27 +30,43 @@ helper.Geometry = function Geometry (o, val) {
   }
 };
 
-helper.Format = function Format (o, val) {
+helper.format = function Format (o, val) {
   o.format = val.split(" ")[0];
 };
 
-helper.Depth = function Depth (o, val) {
+helper.depth = function Depth (o, val) {
   o.depth = parseInt(val, 10);
 };
 
-helper.Colors = function Colors (o, val) {
-  o.color = parseInt(val, 10);
+helper.colors = function Colors (o, val) {
+  o.colors = parseInt(val, 10);
 };
 
-helper.Orientation = function Orientation (o, val) {
+helper.orientation = function Orientation (o, val) {
   if (val in orientations) {
     o['Profile-EXIF'] || (o['Profile-EXIF'] = {});
     o['Profile-EXIF'].Orientation = val;
-    o.Orientation = orientations[val];
+    o.orientation = orientations[val];
   } else {
-    o.Orientation = val || 'Unknown';
+    o.orientation = helper.valParser(val);
   }
 };
+
+helper.valParser = function(val) {
+  switch(val) {
+    case 'true':
+    case 'True':
+      return true
+    case 'false':
+    case 'False':
+      return false
+    case 'Undefined':
+      return undefined
+
+    default:
+      return val
+  }
+}
 
 function parse (stdout) {
   // normalize
@@ -78,13 +96,15 @@ function parse (stdout) {
 
       if ('Image' == key || 'Warning' == key) continue;
 
+      key = camelCase(key)
+
       if(inHistogram && indent === 2)
         inHistogram = false
 
-      if(key === "Histogram")
+      if(key === "histogram")
         inHistogram = true
 
-      if(inHistogram) indent = 3
+      if(inHistogram && key !== "histogram") indent = 3
 
       var val = res[3] ? res[3].trim() : null;
 
@@ -108,7 +128,7 @@ function parse (stdout) {
       level = indent;
 
       if (val) {
-        o[key] = val;
+        o[key] = helper.valParser(val)
 
         if (key in helper) {
           helper[key](o, val);

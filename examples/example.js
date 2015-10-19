@@ -82,3 +82,5 @@ Image: 3aa85319-240a-421d-b433-ccb310c079ab.jpg
 `
 
 var identifyData = identifyVerboseParser(data)
+
+console.log(identifyData)
