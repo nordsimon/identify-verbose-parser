@@ -1,10 +1,14 @@
 {
   "name": "identify-verbose-parser",
   "version": "1.0.0",
-  "description": "Parses a verbose outpout from imagmagicks identify",
+    "description": "Parses a verbose outpout from imagmagicks identify",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snordrapidimages/identify-verbose-parser.git"
   },
   "author": "Simon Nord <simon@nord.org>",
   "license": "MIT"
